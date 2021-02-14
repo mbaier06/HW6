@@ -71,6 +71,10 @@ window.addEventListener('DOMContentLoaded', async function(event) {
      event.preventDefault()
     //  console.log(`${movieId} was clicked!`)
     document.querySelector(`.movie-${movieId}`).classList.add('opacity-20')
+    // Attempted un-watch logic
+    // if (document.querySelector(`.movie-${movieId}`).classList.contains('opacity-20') == true) {
+    //   document.querySelector(`.movie-${movieId}`).classList.remove('opacity-20')
+    // } else {document.querySelector(`.movie-${movieId}`).classList.add('opacity-20')}
    })
   }
 
