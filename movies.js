@@ -17,7 +17,12 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   // movies. Write the contents of this array to the JavaScript
   // console to ensure you've got good data
   // ⬇️ ⬇️ ⬇️
-
+  let apiKey = '930dfd83a5eca2f4daa4014bcba9d8e7'
+  let response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US`)
+  let json = await response.json()
+  // console.log(json)
+  let movies = json.results
+  console.log(movies)
   // ⬆️ ⬆️ ⬆️ 
   // End Step 1
   
@@ -33,7 +38,20 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   //   <a href="#" class="watched-button block text-center text-white bg-green-500 mt-4 px-4 py-2 rounded">I've watched this!</a>
   // </div>
   // ⬇️ ⬇️ ⬇️
-
+  for (i = 0; i < movies.length; i++){
+    movie = movies[i]
+    // console.log(movie)
+    let movieId = movie.id 
+    console.log(movieId)
+    let poster_path = movie.poster_path
+    let moviePosterPath = `https://image.tmdb.org/t/p/w500${poster_path}`
+    document.querySelector('.movies').insertAdjacentHTML('beforeend', `
+    <div class="w-1/5 p-4 movie-${movieId}">
+      <img src="${moviePosterPath}" class="w-full">
+      <a href="#" class="watched-button block text-center text-white bg-green-500 mt-4 px-4 py-2 rounded">I've watched this!</a>
+    </div>
+    `)
+  
   // ⬆️ ⬆️ ⬆️ 
   // End Step 2
 
@@ -48,6 +66,13 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   //   the movie is watched. Use .classList.remove('opacity-20')
   //   to remove the class if the element already contains it.
   // ⬇️ ⬇️ ⬇️
+   let watchButton = document.querySelector(`.movie-${movieId} .watched-button`)
+   watchButton.addEventListener('click', async function(event){
+     event.preventDefault()
+    //  console.log(`${movieId} was clicked!`)
+    document.querySelector(`.movie-${movieId}`).classList.add('opacity-20')
+   })
+  }
 
   // ⬆️ ⬆️ ⬆️ 
   // End Step 3
