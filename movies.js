@@ -85,23 +85,24 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   // - When the "watched button" is clicked, changed the opacity
   //   of the entire "movie" by using .classList.add('opacity-20')
   // - When done, refresh the page... does the opacity stick?
-  // - Bonus challenge: add code to "un-watch" the movie by
-  //   using .classList.contains('opacity-20') to check if 
-  //   the movie is watched. Use .classList.remove('opacity-20')
-  //   to remove the class if the element already contains it.
   // ⬇️ ⬇️ ⬇️
    let watchButton = document.querySelector(`.movie-${movieId} .watched-button`)
    watchButton.addEventListener('click', async function(event){
      event.preventDefault()
      console.log(`${movieId} was clicked!`)
     document.querySelector(`.movie-${movieId}`).classList.add('opacity-20')
-    // Attempted un-watch logic
-    // if (document.querySelector(`.movie-${movieId}`).classList.contains('opacity-20') == true) {
-    //   document.querySelector(`.movie-${movieId}`).classList.remove('opacity-20')
-    // } else {document.querySelector(`.movie-${movieId}`).classList.add('opacity-20')}
+
+  // - Bonus challenge: add code to "un-watch" the movie by using .classList.contains('opacity-20') to check if 
+  //   the movie is watched. Use .classList.remove('opacity-20')
+  //   to remove the class if the element already contains it.
+    // Un-watch logic (although doesnt persist upon page refresh since not properly hooked to DB to delete Doc ID):
+    if (document.querySelector(`.movie-${movieId}`).classList.contains('opacity-20') == true) {
+      await db.collection('movies').doc(`${movieId}`).delete();
+      document.querySelector(`.movie-${movieId}`).classList.remove('opacity-20');
+    } else {}
 
     // Step 4: 
-    // - Properly configure Firebase and Firebase Cloud Firestore
+    // - Properly configure Firebase and Firebase Cloud Firestore --- done in HTML file
     // - Inside your "watched button" event listener, you wrote in
     //   step 3, after successfully setting opacity, persist data
     //   for movies watched to Firebase.
