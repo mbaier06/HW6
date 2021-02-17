@@ -47,6 +47,12 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   let watchedMovies = querySnapshot.docs
   console.log(watchedMovies)
   
+    // Second part of Step 4
+    // - Modify the code you wrote in Step 2 to conditionally
+    //   make the movie opaque if it's already watched in the 
+    //   database.
+    // - Hint: you can use if (document) with no comparison
+    //   operator to test for the existence of an object
     for (i = 0; i < movies.length; i++){
       movie = movies[i]
       // console.log(movie)
@@ -60,15 +66,10 @@ window.addEventListener('DOMContentLoaded', async function(event) {
         <a href="#" class="watched-button block text-center text-white bg-green-500 mt-4 px-4 py-2 rounded">I've watched this!</a>
       </div>
       `)
-    // Second part of Step 4
-    // - Modify the code you wrote in Step 2 to conditionally
-    //   make the movie opaque if it's already watched in the 
-    //   database.
-    // - Hint: you can use if (document) with no comparison
-    //   operator to test for the existence of an object.
+
       for (let dbIndex = 0; dbIndex < watchedMovies.length; dbIndex++) {
         watchedMovie = watchedMovies[dbIndex]
-        // console.log(watchedMovie)
+        // setting duplicative movie ID variable to map DB doc ID with json array movie IDs for if statement below
         watchedMovieId = watchedMovie.id
         // console.log(watchedMovieId)
         if (watchedMovieId == movieId) {
@@ -89,17 +90,17 @@ window.addEventListener('DOMContentLoaded', async function(event) {
    let watchButton = document.querySelector(`.movie-${movieId} .watched-button`)
    watchButton.addEventListener('click', async function(event){
      event.preventDefault()
-     console.log(`${movieId} was clicked!`)
+     console.log(`I watched ${movieId}!`)
     document.querySelector(`.movie-${movieId}`).classList.add('opacity-20')
 
   // - Bonus challenge: add code to "un-watch" the movie by using .classList.contains('opacity-20') to check if 
   //   the movie is watched. Use .classList.remove('opacity-20')
   //   to remove the class if the element already contains it.
     // Un-watch logic (although doesnt persist upon page refresh since not properly hooked to DB to delete Doc ID):
-    if (document.querySelector(`.movie-${movieId}`).classList.contains('opacity-20') == true) {
-      await db.collection('movies').doc(`${movieId}`).delete();
-      document.querySelector(`.movie-${movieId}`).classList.remove('opacity-20');
-    } else {}
+    // if (document.querySelector(`.movie-${movieId}`).classList.contains('opacity-20')) {
+    //   await db.collection('movies').doc(`${movieId}`).delete();
+    //   document.querySelector(`.movie-${movieId}`).classList.remove('opacity-20');
+    // } else {}
 
     // Step 4: 
     // - Properly configure Firebase and Firebase Cloud Firestore --- done in HTML file
